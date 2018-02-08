@@ -1,60 +1,48 @@
 'use strict';
 
-const parser = require("./parse-request");
+const requestParser = require('./request-parser.js');
 
-// Route Registry
-// Store route handlers for each of the verbs ...
-/*
-    i.e.
-    GET: {
-        "/api/note" : (req, res) => {},  ....
-    }
-*/
-const routeHandlers = {
-    GET: {},
-    PUT: {},
-    POST: {},
-    PATCH: {},
-    DELETE: {}
+let routeHandlers = {
+  POST: {},
+  GET: {},
+  PUT: {},
+  DELETE: {},
+  PATCH: {},
+  OPTIONS: {},
+  CONNECT: {},
+  HEAD: {},
 };
 
 module.exports = {
-    get: (uri, callback) => {
-        routeHandlers.GET[uri] = callback;
-    },
-    post: (uri, callback) => {
-        routeHandlers.POST[uri] = callback;
-    },
-    put: (uri, callback) => {
-        routeHandlers.PUT[uri] = callback;
-    },
-    patch: (uri, callback) => {
-        routeHandlers.PATCH[uri] = callback;
-    },
-    delete: (uri, callback) => {
-        routeHandlers.DELETE[uri] = callback;
-    },
-    route: (req, res) => {
-        // parse the request
-        // Return a 400 if the request itself is invalid
-        // Find the handler
-            // 404 if it's not there            
-        // Execute Handler
-        parser(req)
-            .then( (reg) => {
-                if ( handler ) {
-                    return handler(reg, res);
-                }
-                else {
-                    console.error("NOT_FOUND", req.url.pathname);
-                    res.writeHead(404);
-                    res.end();
-                }
-            })
-            .catch( (err) => {
-                console.error("INVALID_REQUEST", err);
-                res.writeHead(400);
-                res.end();
-            });
-    }
+  get: (url, callback) => {
+    routeHandlers.GET[url] = callback;
+  },
+  post: (url, callback) => {
+    routeHandlers.POST[url] = callback;
+  },
+  put: (url, callback) => {
+    routeHandlers.PUT[url] = callback;
+  },
+  delete: (url, callback) => {
+    routeHandlers.DELETE[url] = callback;
+  },
+  route: (req, res) => {
+    console.log(routeHandlers);
+    // parse the url and body (400 on failure)
+    requestParser(req)
+      .then(req => {
+      // find the handler 
+        let handler = routeHandlers[req.method][req.url.pathname];
+        console.log('handler', req.url.pathname);
+        if(handler)
+          return handler(req, res);
+        res.writeHead(404);
+        res.end();
+      })
+      .catch(err => {
+        console.error('__REQUEST_ERROR__', err);
+        res.writeHead(400);
+        res.end();
+      });
+  },
 };

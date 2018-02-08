@@ -1,0 +1,30 @@
+{
+  "name": "lab-cole",
+  "version": "1.0.0",
+  "description": "note-api",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "start": "node index.js",
+    "watch": "nodemon index.js",
+    "test": "jest -i --coverage",
+    "test-watch": "jest -i --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^4.7.1",
+    "jest": "^21.1.0",
+    "nodemon": "^1.12.1",
+    "superagent": "^3.6.0"
+  },
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "uuid": "^3.1.0"
+  }
+}
