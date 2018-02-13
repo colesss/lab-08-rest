@@ -4,7 +4,7 @@ const http = require('http');
 const router = require('./router.js');
 
 // register rotues
-require('../route/note-router.js');
+require('../route/book-router.js');
 
 // add router to server
 const app = http.createServer(router.route);

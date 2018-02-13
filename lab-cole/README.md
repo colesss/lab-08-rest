@@ -8,11 +8,12 @@ Enter in Command Line
 
 
 ## Program Issues
-* ...
+* Unhandled promise rejection
 
 
 ## Current Program Status
-* copied code base from demo, need to implement self code to it.
+* Followed the demo for router and get, post, delete requests. Seems correct so far but I don't know anyting about how to implement promises and I think I am still having a port issue...
+* Turning in what I have and moving on.
 
 
 ## Developer Installs
